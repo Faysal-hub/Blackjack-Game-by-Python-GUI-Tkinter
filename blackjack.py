@@ -27,6 +27,24 @@ def load_images(card_images):
             image = tkinter.PhotoImage(file=name)
             card_images.append((10, image,))
 
+
+def deal_card(frame):
+    # pop the next card off the top of the deck
+    next_card = deck.pop()
+    # add the image to a Label and display the label
+    tkinter.Label(frame, image=next_card[1], relief='raised').pack(side='left')
+    # now return the card's face value
+    return next_card
+
+
+def deal_dealer():
+    deal_card(dealer_card_frame)
+
+
+def deal_player():
+    deal_card(player_card_frame)
+
+
 # Set up the screen and frames for the dealer and player
 mainWindow.title("Black Jack")
 mainWindow.geometry("640x480")
@@ -57,17 +75,16 @@ player_card_frame.grid(row=2, column=1, sticky='ew', rowspan=2)
 button_frame = tkinter.Frame(mainWindow)
 button_frame.grid(row=3, column=0, columnspan=3, sticky='w')
 
-dealer_button = tkinter.Button(button_frame, text="Dealer")
+dealer_button = tkinter.Button(button_frame, text="Dealer", command=deal_dealer)
 dealer_button.grid(row=0, column=0)
 
-player_button = tkinter.Button(button_frame, text="Player")
+player_button = tkinter.Button(button_frame, text="Player", command=deal_player)
 player_button.grid(row=0, column=1)
 
 # load cards
 cards = []
 load_images(cards)
 print(cards)
-
 # Create a new deck of cards and shuffle them
 deck = list(cards)
 
